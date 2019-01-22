@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>djvuetut</title>
+  </head>
+  <body>
+    {% load render_bundle from webpack_loader %}
+      <div id="app">
+        <django></django>
+      </div>
+    {% render_bundle 'main' %}
+  </body>
+</html>
