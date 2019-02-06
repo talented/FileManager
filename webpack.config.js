@@ -23,7 +23,29 @@ module.exports = {
           'vue-style-loader',
           'css-loader'
         ],
-      },      {
+      },
+      {
+        test: /\.scss$/,
+        use: [
+          'vue-style-loader',
+          'css-loader',
+          'sass-loader'
+        ]
+      },
+      {
+          test: /\.svg$/,
+          use: [
+              {loader: 'url-loader'},
+              {
+                  loader: 'svg-colorize-loader',
+                  options: {
+                      color1: '#000000',
+                      color2: '#FFFFFF'
+                  }
+              }
+          ]
+      },
+      {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {

@@ -10,7 +10,16 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
-    "vue": "^2.5.11"
+    "ag-grid-community": "^20.0.0",
+    "ag-grid-vue": "^20.0.0",
+    "axios": "^0.18.0",
+    "bootstrap-vue": "^2.0.0-rc.11",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
+    "svg-colorize-loader": "^0.1.2",
+    "vue": "^2.5.11",
+    "vue-property-decorator": "^7.3.0",
+    "vuex": "^3.1.0"
   },
   "browserslist": [
     "> 1%",

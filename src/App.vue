@@ -1,22 +1,27 @@
 <template>
   <div id="app">
-    <h1>{{ message }}</h1>
+    <Header></Header>
+    <Home></Home>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
+import Header from './components/Header'
+import Home from './components/Home'
+
 export default {
   name: 'app',
-  data () {
-    return {
-      message: 'Welcome to Your Vue.js App'
-    }
+  components: {
+    Header,
+    Home
   }
 }
 </script>
 
 <style>
 #app {
-  text-align: center
+  /* text-align: center */
 }
 </style>
