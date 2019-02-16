@@ -9,6 +9,7 @@ export default new Vuex.Store ({
     rowData: []
   },
   actions: {
+
     loadFiles ({ commit }) {
       axios
            .get('api/files/')
@@ -16,7 +17,7 @@ export default new Vuex.Store ({
              // console.log('axios data', data.data)
              let rowData = data.data
              commit('SET_FILES', rowData)
-
+             console.log(rowData)
            })
            .catch(error => {
              console.log(error)

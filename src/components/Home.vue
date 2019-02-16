@@ -5,15 +5,16 @@
     <b-card bg-variant="light">
       <b-form-file v-model="selFile" ref="form" placeholder="Upload a file..."></b-form-file>
 
-      <b-button @click="submitFile">Submit</b-button>
+      <b-button  @click="submitFile">Submit</b-button>
     </b-card>
 
     <br />
 
     <b-card bg-variant="light">
 
+    <!-- <b-button @click="newFolder()">New Folder</b-button> -->
     <b-button @click="getSelectedRows()">Show Details</b-button>
-    <b-button @click="deleteFile()">Delete File</b-button>
+    <b-button style="background-color: IndianRed;" @click="deleteFile()">Delete File</b-button>
 
     <hr />
 
@@ -59,12 +60,13 @@ import axios from 'axios'
 import {AgGridVue} from "ag-grid-vue"
 
 import { mapState } from 'vuex'
-import { wait } from '../utils'
+import { wait, sizeFormatter, dateFormatter } from '../utils'
 
 export default {
   data () {
     return {
       message: 'Welcome to Your Vue.js App!',
+      data: {dirname: '.', root: '.'},
       selFile: null,
       columnDefs: null,
       autoGroupColumnDef: null,
@@ -91,10 +93,23 @@ export default {
             return params.columnApi.getRowGroupColumns().length === 0;
           },
         },
-        {headerName: 'Size', field: 'size', width: 75, filterParams: { newRowsAction: "keep" } },
+        {
+          headerName: 'Size',
+          field: 'size',
+          valueFormatter: sizeFormatter,
+          width: 75,
+          filterParams: { newRowsAction: "keep" }
+        },
         {headerName: 'Filetype', field: 'filetype', width: 75, filterParams: { newRowsAction: "keep" }},
-        {headerName: 'Added', field: 'since_added', width: 100, sort: "asc", filterParams: { newRowsAction: "keep" } }
-
+        {
+          headerName: 'Added',
+          field: 'since_added',
+          width: 100,
+          sort: 'desc',
+          valueFormatter: dateFormatter
+          // comparator: dateComparator
+        }
+        // {headerName: 'Added', field: 'since_added', width: 100, sort: "asc", filterParams: { newRowsAction: "keep" } }
     ];
 
     this.autoGroupColumnDef = {
@@ -133,7 +148,7 @@ export default {
       this.gridApi = params.api;
       this.columnApi = params.columnApi;
       params.api.sizeColumnsToFit();
-
+      params.api.setRowData();
     },
     getSelectedRows () {
       const selectedNodes = this.gridApi.getSelectedNodes();
@@ -153,8 +168,15 @@ export default {
 
       fd.append('file', vm.selFile)
 
+      var config = {
+        onUploadProgress (e) {
+          var percentCompleted = Math.round( (e.loaded * 5000) / e.total );
+          console.log("waiting")
+        }
+      };
+
       try {
-        axios.post('api/files/', fd,
+        axios.post('api/files/', fd, config,
         { headers: {
           'Content-Type': 'multipart/form-data'
           // "X-CSRFTOKEN": 'csrfCookie',
@@ -162,13 +184,14 @@ export default {
            }
         })
           .then(res => {
-            console.log(res)
-            wait(1500) // DEV ONLY: wait for 1.5s
-          })
-          .then(res => {
-            // this.gridOApi.refreshCells()
+            // console.log(res)
             this.$store.dispatch('loadFiles')
-            console.log('Files loaded')
+            // wait(5000) // DEV ONLY: wait for 1.5s
+          })
+          .then( () => {
+            // this.gridOApi.refreshCells()
+            // console.log('Files loaded')
+            // this.gridApi.setRowData();
           })
       } catch (err) {
         console.error(`Error received from axios.post: ${JSON.stringify(err)}`);
@@ -177,17 +200,35 @@ export default {
 
 
     },
+    // select_file (selectedNodes) {
+    //   // const selectedNodes =
+    //   // alert(`Selected Files:  ${selectedNodes}`)
+    //   const selectedData = selectedNodes.map( node => node.data );
+    //   // const result_id = selectedData.map( node => node.file_id).join(', ');
+    //   return selectedData.map( node => node.file_id)
+    //   // return result_id
+    // },
     deleteFile () {
-      const selectedNodes = this.gridApi.getSelectedNodes();
-      // alert(`Selected Files:  ${selectedNodes}`)
+      const selectedNodes = this.gridApi.getSelectedNodes()
       const selectedData = selectedNodes.map( node => node.data );
-      const selectedDataStringPresentation = selectedData.map( node => node.file_id).join(', ');
-      console.log(selectedDataStringPresentation)
-      // axios.delete('api/files/' + result.id)
-      // .then(response => {
-      //   this.result.splice(id, 1)
-      //   console.log(this.result);
-      // });
+      // const result_id = selectedData.map( node => node.file_id).join(', ');
+      const result_id = selectedData.map( node => node.file_id)
+      console.log(result_id)
+      // result_id = select_file(this.gridApi.getSelectedNodes(
+
+      if (confirm (`You are deleting id: ${result_id}\nare you sure?`))
+      // console.log(result_id)
+        axios.delete('api/files/' + result_id)
+          .then(response => {
+            console.log(response)
+            // this.result.splice(id, 1)
+            // alert(`This will be deleted? ${result_id}`)
+            this.$store.dispatch('loadFiles')
+            // console.log(this.result);
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
 
     // deleteNote: function (id) {
@@ -208,6 +249,43 @@ export default {
     // }
   }
 }
+
+// function sizeFormatter(params) {
+//   return Math.floor(params.value).toString() + ' TB'
+// }
+
+function sizeComparator(d1, d2) {
+  console.log(params)
+  return params
+}
+
+function dateComparator(date1, date2) {
+  console.log(date1, date2)
+  var date1Number = monthToComparableNumber(date1);
+  var date2Number = monthToComparableNumber(date2);
+  if (date1Number === null && date2Number === null) {
+    return 0;
+  }
+  if (date1Number === null) {
+    return -1;
+  }
+  if (date2Number === null) {
+    return 1;
+  }
+  return date1Number - date2Number;
+}
+
+function monthToComparableNumber(date) {
+  if (date === undefined || date === null || date.length !== 10) {
+    return null;
+  }
+  var yearNumber = date.substring(6, 10);
+  var monthNumber = date.substring(3, 5);
+  var dayNumber = date.substring(0, 2);
+  var result = yearNumber * 10000 + monthNumber * 100 + dayNumber;
+  return result;
+}
+
 </script>
 
 <style lang="scss">
