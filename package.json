@@ -10,6 +10,9 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.15",
+    "@fortawesome/free-solid-svg-icons": "^5.7.2",
+    "@fortawesome/vue-fontawesome": "^0.1.5",
     "ag-grid-community": "^20.0.0",
     "ag-grid-vue": "^20.0.0",
     "axios": "^0.18.0",

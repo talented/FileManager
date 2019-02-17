@@ -12,7 +12,6 @@
 
     <b-card bg-variant="light">
 
-    <!-- <b-button @click="newFolder()">New Folder</b-button> -->
     <b-button @click="getSelectedRows()">Show Details</b-button>
     <b-button style="background-color: IndianRed;" @click="deleteFile()">Delete File</b-button>
 
@@ -26,7 +25,7 @@
 
 
                  :autoGroupColumnDef="autoGroupColumnDef"
-
+                 :frameworkComponents="frameworkComponents"
                  :suppressRowClickSelection="true"
                  :groupSelectsChildren="true"
                  :debug="true"
@@ -65,9 +64,11 @@
 <script>
 import axios from 'axios'
 import {AgGridVue} from "ag-grid-vue"
+import filetypeCellRenderer from "../filetypeCellRenderer.js"
 
 import { mapState } from 'vuex'
 import { wait, sizeFormatter, dateFormatter } from '../utils'
+
 
 // import ConfirmationModal from './ConfirmationModal'
 
@@ -79,6 +80,7 @@ export default {
       selFile: null,
       columnDefs: null,
       autoGroupColumnDef: null,
+      frameworkComponents: null,
       rowSelection: null,
       gridOptions: {},
       modal: false,
@@ -95,7 +97,7 @@ export default {
         {
           headerName: 'Name',
           field: 'name',
-          width: 250,
+          width: 305,
           // checkboxSelection: true,
           filterParams: { newRowsAction: "keep" },
           checkboxSelection: params => {
@@ -106,23 +108,33 @@ export default {
           },
         },
         {
+          headerName: 'Filetype',
+          field: 'filetype',
+          width: 55,
+          cellRenderer: 'filetypeCellRenderer',
+          filterParams: { newRowsAction: "keep" },
+        },
+        {
           headerName: 'Size',
           field: 'size',
           valueFormatter: sizeFormatter,
-          width: 75,
+          width: 60,
           filterParams: { newRowsAction: "keep" }
         },
-        {headerName: 'Filetype', field: 'filetype', width: 75, filterParams: { newRowsAction: "keep" }},
         {
           headerName: 'Added',
           field: 'since_added',
-          width: 100,
+          width: 80,
           sort: 'desc',
           valueFormatter: dateFormatter
           // comparator: dateComparator
         }
         // {headerName: 'Added', field: 'since_added', width: 100, sort: "asc", filterParams: { newRowsAction: "keep" } }
-    ];
+    ]
+
+    this.frameworkComponents = {
+      filetypeCellRenderer: filetypeCellRenderer
+    }
 
     this.autoGroupColumnDef = {
       headerName: "Group",
@@ -339,6 +351,14 @@ $accent-color: green; // amber-A200
 
 .ag-theme-material {
   font-size: 16px;
+}
+
+.ag-theme-material .ag-row, .ag-theme-material .ag-row:not(.ag-row-first) {
+  padding-top: 7px;
+}
+
+.ag-cell-focus,.ag-cell-no-focus{
+  border:none !important;
 }
 
 .ag-root-wrapper-body.ag-layout-normal {

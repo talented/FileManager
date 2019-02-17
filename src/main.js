@@ -1,5 +1,3 @@
-// import "../node_modules/ag-grid-community/dist/styles/ag-grid.css";
-// import "../node_modules/ag-grid-community/dist/styles/ag-theme-balham.css";
 
 import Vue from 'vue'
 import App from './App.vue'
@@ -12,6 +10,38 @@ Vue.use(BootstrapVue)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
+// font awesome settings
+import { library } from '@fortawesome/fontawesome-svg-core'
+import {
+        faFilePdf,
+        faFileImage,
+        faFileExcel,
+        faFilePowerpoint,
+        faFileWord,
+        faFileVideo,
+        faFileArchive,
+        faFileAlt,
+        faFile
+       } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+library.add(
+            faFilePdf,
+            faFileImage,
+            faFileExcel,
+            faFilePowerpoint,
+            faFileWord,
+            faFileVideo,
+            faFileArchive,
+            faFileAlt,
+            faFile
+          )
+
+Vue.component('font-awesome-icon', FontAwesomeIcon)
+
+Vue.config.productionTip = false
+
+// axios settings
 axios.defaults.baseURL = 'http://localhost:8000'
 axios.defaults.xsrfHeaderName = "X-CSRFToken"
 axios.defaults.xsrfCookieName = 'csrftoken'
