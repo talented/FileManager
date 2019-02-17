@@ -42,6 +42,7 @@
 
                  :enableRangeSelection="true"
                  animateRows
+                 @rowClicked = "onRowClicked"
                  :paginationAutoPageSize="true"
                  :pagination="true"
 
@@ -50,6 +51,12 @@
     </ag-grid-vue>
 
   </b-card>
+
+
+  <!-- Modal Component -->
+  <b-modal v-if="mShow" v-model="modal" @ok="handleOk" @cancel="$emit('close')">
+      Selected file(s) will be deleted?
+  </b-modal>
 
   </b-container>
 
@@ -62,6 +69,8 @@ import {AgGridVue} from "ag-grid-vue"
 import { mapState } from 'vuex'
 import { wait, sizeFormatter, dateFormatter } from '../utils'
 
+// import ConfirmationModal from './ConfirmationModal'
+
 export default {
   data () {
     return {
@@ -71,7 +80,10 @@ export default {
       columnDefs: null,
       autoGroupColumnDef: null,
       rowSelection: null,
-      gridOptions: {}
+      gridOptions: {},
+      modal: false,
+      mShow: false,
+      result_id: null
     }
   },
   components: {
@@ -171,7 +183,7 @@ export default {
       var config = {
         onUploadProgress (e) {
           var percentCompleted = Math.round( (e.loaded * 5000) / e.total );
-          console.log("waiting")
+          // console.log("waiting")
         }
       };
 
@@ -208,17 +220,22 @@ export default {
     //   return selectedData.map( node => node.file_id)
     //   // return result_id
     // },
+
     deleteFile () {
       const selectedNodes = this.gridApi.getSelectedNodes()
-      const selectedData = selectedNodes.map( node => node.data );
-      // const result_id = selectedData.map( node => node.file_id).join(', ');
-      const result_id = selectedData.map( node => node.file_id)
-      console.log(result_id)
-      // result_id = select_file(this.gridApi.getSelectedNodes(
-
-      if (confirm (`You are deleting id: ${result_id}\nare you sure?`))
-      // console.log(result_id)
-        axios.delete('api/files/' + result_id)
+      if (selectedNodes.length > 0) {
+        const selectedData = selectedNodes.map( node => node.data );
+        // const result_id = selectedData.map( node => node.file_id).join(', ');
+        const result_id = selectedData.map( node => node.file_id)
+        console.log(result_id)
+        this.result_id = result_id
+        this.mShow = true
+        this.modal = true
+      }
+      // if (confirm (`You are deleting id: ${result_id}\nare you sure?`))
+    },
+    handleOk () {
+        axios.delete('api/files/' + this.result_id)
           .then(response => {
             console.log(response)
             // this.result.splice(id, 1)
@@ -229,7 +246,29 @@ export default {
         .catch(error => {
           console.log(error)
         })
+        // this.modalShow = false
+        this.mShow = false
+    },
+    onRowClicked(event) {
+      let file_id = event.node.data.file_id
+      let filename = event.node.data.name
+      console.log(file_id)
+      axios({
+        url: `media/${filename}`,
+        method: 'GET',
+        responseType: 'blob',
+      })
+      .then ((res) => {
+        const url = window.URL.createObjectURL(new Blob([res.data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', filename)
+        document.body.appendChild(link)
+        link.click()
+      })
+
     }
+
 
     // deleteNote: function (id) {
     //     swal({

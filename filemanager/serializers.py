@@ -28,48 +28,6 @@ class DataSerializer(serializers.ModelSerializer):
     #     # size = validated_data.get('size', None)
     #     return Data.objects.create(data=updata)
     #     # return Data(data=updata)
-
-    def convert_size(self, size):
-        #2**10 = 1024
-        # power = 2**10
-        # n = 0
-        # powerN = {0 : 'B', 1: 'KB', 2: 'MB', 3: 'GB', 4: 'TB'}
-        # while size > power:
-        #     size /=  power
-        #     n += 1
-        #
-        # precision = 1
-        # size = round(size, precision)
-        #
-        # # return str(size) + ' ' + powerN[n]
-        # return size
-        # return size, Dic_powerN[n]+'bytes'
-
-        step_to_greater_unit = 1024.
-        #
-        number_of_bytes = float(size)
-        unit = 'B'
-
-        if (number_of_bytes / step_to_greater_unit) >= 1:
-            number_of_bytes /= step_to_greater_unit
-            unit = 'KB'
-
-        if (number_of_bytes / step_to_greater_unit) >= 1:
-            number_of_bytes /= step_to_greater_unit
-            unit = 'MB'
-
-        if (number_of_bytes / step_to_greater_unit) >= 1:
-            number_of_bytes /= step_to_greater_unit
-            unit = 'GB'
-
-        if (number_of_bytes / step_to_greater_unit) >= 1:
-            number_of_bytes /= step_to_greater_unit
-            unit = 'TB'
-
-        precision = 1
-        number_of_bytes = round(number_of_bytes, precision)
-
-        return number_of_bytes
         # return str(number_of_bytes) + ' ' + unit
 
     def get_size(self, obj):
@@ -93,11 +51,4 @@ class DataSerializer(serializers.ModelSerializer):
 
     def get_since_added(self, obj):
         date_added = obj.date_created
-        now = timezone.now()
-        time_difference = now - date_added
-        # tz = timezone.get_current_timezone()
-        # dt = tz.localize(datetime.strptime(str(date_added), '%m/%d/%Y'))
-        print(date_added.ctime())
-        # print(str(time_difference))
-        # return str(time_difference).split(',')[0] + ' ago'
         return date_added
