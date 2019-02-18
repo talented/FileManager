@@ -1,5 +1,5 @@
 <template>
-    <header>
+    <header class="head">
         <b-navbar type="dark" variant="primary" toggleable>
             <b-navbar-brand href="#">File Manager</b-navbar-brand>
             <b-navbar-nav class="ml-auto">
@@ -23,5 +23,8 @@ export default{
 }
 </script>
 <style scoped>
-
+  @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed')
+  .head {
+    font-family: 'Roboto Condensed', sans-serif;
+  }
 </style>

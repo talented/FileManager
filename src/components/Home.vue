@@ -5,15 +5,15 @@
     <b-card bg-variant="light">
       <b-form-file v-model="selFile" ref="form" placeholder="Upload a file..."></b-form-file>
 
-      <b-button  @click="submitFile">Submit</b-button>
+      <b-button variant="primary" @click="submitFile">Submit</b-button>
     </b-card>
 
     <br />
 
     <b-card bg-variant="light">
 
-    <b-button @click="getSelectedRows()">Show Details</b-button>
-    <b-button style="background-color: IndianRed;" @click="deleteFile()">Delete File</b-button>
+    <b-button variant="danger" @click="deleteFile()">Delete Selected File(s)</b-button>
+    <b-button variant="warning" @click="getSelectedRows()">Show Details</b-button>
 
     <hr />
 
@@ -351,11 +351,21 @@ $accent-color: green; // amber-A200
 
 .ag-theme-material {
   font-size: 16px;
+  font-family: Questrial, Roboto;
 }
 
 .ag-theme-material .ag-row, .ag-theme-material .ag-row:not(.ag-row-first) {
   padding-top: 7px;
 }
+
+.ag-theme-material .ag-icon-checkbox-checked:empty {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAC2ElEQVR42tWaPWhTURTHgzZ+QkWk0KWLZKiERPJNaCtBqYODQyRFbP3oaEdxfGPH0klwEXGwg+AQ3Sy4iC5VwclJBzEFKa04tKSV1vj/Q+t9fb70vCZe33mBQ5J3zr33/7s59917c1+s1Wr9ZZlMppzL5ZxsNvsM74uwVki2uK3BoSY/rbu+IPBEPp9/yMIajdqo0RcAziE4GwxUbg1q3QVAqjbiNxD8Fu/1MIxtU4MfBDX/AfBJm1XYVCKROEx/mEYN1EJN3nSif2fAesUP0qnJqMkLQe10OB6AKRbQaNTm0erEeJty57yQNgrSyYwJao+57/McNCH2bhztX4Vl9oqjRvc8EfP8JPUwxFcqlSNo+51Lx1wqlTrZBrTu1qwBgGk86zcLwy5qB6D4EbS71WbSasIG1QKk0+njaPOzsHy4ohWAbd8Xlg0rxWLxlEoA9OyoIJ52Td8YMGuvr3uJx9h4ylitAI+Enl/CMqFPIwBT57Ignr1fZaw6AA5ItPFNAHjMWI0AbOuJtIXkDKwSAGkxFmDLeImx6gAKhUI/6l4WAB4wViUAeva5IP5LqVTqtQpQLpePIg0mYdVarXZwH3l/UxD/C7fMC4y1BsCBBd9790YimUweCpA6A4j/IeT9PcZaA+Cs6dlEyBCm7LzQ+59gx6wCQOgb4w8OAf9tQfwWbJix1gCQm+eMLzAEU+c0fKtC2RnG2gbow7X1/UDgdQDXXgllPnIbaRfApNA4rm8GhcDnO0LsZgEv1m0fwEBM7Gz7BHsJawqg06zTKoAE0YV9gMWtAggz6vUuIH5iTJ1lPdYBBIgbHUI4LB8SgAwh5P0C7jo9SgDMGicgRBMAZ1hGD4AZ2LcCQNxlrC6A4BCvObHpBTAQkz4Qa7ieoN8mwD/7e51retTxYruu7xB/vnvB8t/rnR1wyHuA+P864Ij8EVPkD/mifcwa/YPu6D9qEP2HPSL/uM1vzeJjU/DsstoAAAAASUVORK5CYII=');
+  // background-color: #dc3545;
+}
+
+// .ag-theme-material .ag-icon-checkbox-checked {
+//   background: none;
+// }
 
 .ag-cell-focus,.ag-cell-no-focus{
   border:none !important;
@@ -374,7 +384,7 @@ $accent-color: green; // amber-A200
 /* Style buttons */
 .btn {
   margin-top: 20px;
-  background-color: DodgerBlue;
+  // background-color: DodgerBlue;
   border: none; /* Remove borders */
   color: white; /* White text */
   padding: 12px 16px; /* Some padding */

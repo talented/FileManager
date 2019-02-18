@@ -2,9 +2,9 @@ import Vue from 'vue'
 
 export default Vue.extend({
   template: `
-          <span style="margin-left: 5px;">
+          <span style="margin-left: 10px;">
 
-              <font-awesome-icon :icon="imgIcon" size="2x" />
+              <font-awesome-icon :icon="imgIcon" size="2x" style="color: #9A2530;" />
 
           </span>
           `,
@@ -15,40 +15,40 @@ export default Vue.extend({
     }
   },
   beforeMount() {
-    // let array = ['file-pdf', 'file-image', 'file-word', 'file-powerpoint', 'file-excel', 'file-video', 'file-archive', 'file']
     switch (this.params.value) {
-      case 'pdf': {
+      case 'pdf':
         this.imgIcon = 'file-pdf'
         break
-      }
-      case 'jpg' || 'jpeg' || 'png' || 'gif': {
+
+      case 'jpg':; case 'jpeg':; case 'png':; case 'gif':
         this.imgIcon = 'file-image'
         break
-      }
-      case 'doc' || 'docx': {
+
+      case 'doc':; case 'docx':
         this.imgIcon = 'file-word'
         break
-      }
-      case 'ppt' || 'pptx': {
+
+      case 'ppt':; case 'pptx':
         this.imgIcon = 'file-powerpoint'
         break
-      }
-      case 'xls' || 'xlsx': {
+
+      case 'xls':; case 'xlsx':
         this.imgIcon = 'file-excel'
         break
-      }
-      case 'mp4' || 'mkv' || 'avi' || 'mov' || 'wmv' || 'mpeg' || 'mpg' || 'm4v' || 'flv': {
+
+      case 'mp4':; case 'mkv':; case 'avi':; case 'mov':; case 'wmv':;
+      case 'mpeg':; case 'mpg':; case 'm4v':; case 'flv':
         this.imgIcon = 'file-video'
         break
-      }
-      case 'zip' || 'rar': {
+
+      case 'zip':; case 'rar':
         this.imgIcon = 'file-archive'
         break
-      }
-      default: {
-        this.imgIcon = 'file'
+
+      default:
+        this.imgIcon = 'file-alt'
       break;
-   }
+
     }
     this.value = this.params.value
   },
