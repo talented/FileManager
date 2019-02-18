@@ -5,14 +5,16 @@
     <b-card bg-variant="light">
       <b-form-file v-model="selFile" ref="form" placeholder="Upload a file..."></b-form-file>
 
-      <b-button variant="primary" @click="submitFile">Submit</b-button>
+      <b-button variant="primary" @click="submitFile">
+        Submit &nbsp; &nbsp;<font-awesome-icon icon="upload" /></b-button>
     </b-card>
 
     <br />
 
     <b-card bg-variant="light">
 
-    <b-button variant="danger" @click="deleteFile()">Delete Selected File(s)</b-button>
+    <b-button variant="danger" @click="deleteFile()">
+      Delete &nbsp;&nbsp;<font-awesome-icon icon="trash-alt" /></b-button>
     <b-button variant="warning" @click="getSelectedRows()">Show Details</b-button>
 
     <hr />
@@ -97,7 +99,7 @@ export default {
         {
           headerName: 'Name',
           field: 'name',
-          width: 305,
+          width: 300,
           // checkboxSelection: true,
           filterParams: { newRowsAction: "keep" },
           checkboxSelection: params => {
@@ -118,13 +120,13 @@ export default {
           headerName: 'Size',
           field: 'size',
           valueFormatter: sizeFormatter,
-          width: 60,
+          width: 55,
           filterParams: { newRowsAction: "keep" }
         },
         {
           headerName: 'Added',
           field: 'since_added',
-          width: 80,
+          width: 90,
           sort: 'desc',
           valueFormatter: dateFormatter
           // comparator: dateComparator

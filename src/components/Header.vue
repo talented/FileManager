@@ -1,7 +1,8 @@
 <template>
     <header class="head">
         <b-navbar type="dark" variant="primary" toggleable>
-            <b-navbar-brand href="#">File Manager</b-navbar-brand>
+            <b-navbar-brand href="#">
+              <font-awesome-icon icon="tasks"/>&nbsp; &nbsp; File Manager</b-navbar-brand>
             <b-navbar-nav class="ml-auto">
               <!-- <router-link tag='li' :to="{ name: 'home'}">
                 <b-nav-item>File Manager</b-nav-item>

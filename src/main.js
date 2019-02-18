@@ -21,7 +21,10 @@ import {
         faFileVideo,
         faFileArchive,
         faFileAlt,
-        faFile
+        faFile,
+        faTrashAlt,
+        faUpload,
+        faTasks
        } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
@@ -34,7 +37,10 @@ library.add(
             faFileVideo,
             faFileArchive,
             faFileAlt,
-            faFile
+            faFile,
+            faTrashAlt,
+            faUpload,
+            faTasks
           )
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
