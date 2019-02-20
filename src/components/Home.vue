@@ -3,7 +3,9 @@
 
     <br  />
     <b-card bg-variant="light">
-      <b-form-file v-model="selFile" ref="form" placeholder="Upload a file..."></b-form-file>
+      <b-form-file v-model="selFile"
+                   ref="form"
+                   placeholder="Drop a file here..."/>
 
       <b-button variant="primary" @click="submitFile">
         Submit &nbsp; &nbsp;<font-awesome-icon icon="upload" /></b-button>
@@ -13,10 +15,24 @@
 
     <b-card bg-variant="light">
 
-    <b-button variant="danger" @click="deleteFile()">
-      Delete &nbsp;&nbsp;<font-awesome-icon icon="trash-alt" /></b-button>
-    <b-button variant="warning" @click="getSelectedRows()">Show Details</b-button>
+      <b-row>
+        <b-col col="4"><b-button variant="danger" @click="deleteFile()">
+          Delete &nbsp;&nbsp;<font-awesome-icon icon="trash-alt" /></b-button>
+        </b-col>
+        <b-col cols="4" md="auto">
+          <b-card bg-variant="light" v-if="status">
+            <b-card-text style="margin-right: 50px;">
+              <strong>{{ selectedDataSizes.length }}</strong> File(s) selected</b-card-text>
+            <b-card-text>Total size: <strong>{{ selectedDataTotal }}</strong></b-card-text>
+          </b-card>
+          <!-- <div class="text-center" v-if="status">
+              <b-badge variant="light">{{ selectedDataSizes.length }}</b-badge>File(s) selected
+              <p>Total size: {{ selectedDataTotal }} </p>
+          </div> -->
+        </b-col>
+      </b-row>
 
+    <!-- <b-button variant="warning" @click="getSelectedRows()">Show Details</b-button> -->
     <hr />
 
     <ag-grid-vue style="width: 100%; height: 500px; border: 1px solid #e7e9ea; border-radius: 4px;"
@@ -24,8 +40,6 @@
                  :row-height=60
                  :columnDefs="columnDefs"
                  :gridOptions="gridOptions"
-
-
                  :autoGroupColumnDef="autoGroupColumnDef"
                  :frameworkComponents="frameworkComponents"
                  :suppressRowClickSelection="true"
@@ -40,10 +54,10 @@
                             filter: true
                             }"
 
-
                  :enableRangeSelection="true"
                  animateRows
                  @rowClicked = "onRowClicked"
+                 @rowSelected = "onRowSelected"
                  :paginationAutoPageSize="true"
                  :pagination="true"
 
@@ -87,7 +101,10 @@ export default {
       gridOptions: {},
       modal: false,
       mShow: false,
-      result_id: null
+      result_id: null,
+      status: false,
+      selectedDataSizes: [],
+      selectedDataTotal: 0
     }
   },
   components: {
@@ -160,7 +177,6 @@ export default {
   mounted () {
     this.$store.dispatch('loadFiles')
     this.gridOApi = this.gridOptions.api;
-
   },
   computed: {
     ...mapState([
@@ -176,51 +192,63 @@ export default {
       params.api.sizeColumnsToFit();
       params.api.setRowData();
     },
-    getSelectedRows () {
+    onRowSelected (event) {
       const selectedNodes = this.gridApi.getSelectedNodes();
-      console.log(selectedNodes)
-      // alert(`Selected Files:  ${selectedNodes}`)
       const selectedData = selectedNodes.map( node => node.data );
       const selectedDataStringPresentation = selectedData.map( node => node.name + ' ' + node.file_id).join(', ');
-      alert(`Selected nodes: ${selectedDataStringPresentation}`);
+      this.selectedDataSizes = selectedData.map(node => node.size)
+
+      // get the total size
+      const add = (a, b) => a + b
+      if (this.selectedDataSizes.length > 0) {
+        this.status = true
+        const totalSize = {value: this.selectedDataSizes.reduce(add)}
+        this.selectedDataTotal = sizeFormatter(totalSize)
+        // alert(`Selected nodes: ${this.selectedDataTotal}`);
+      } else { this.status = false }
     },
-    fileUpload () {
-      this.selFile = this.$refs.form.files[0]
-    },
+    // fileUpload () {
+    //   this.selFile = this.$refs.form.files[0]
+    //   console.log(this.selFile)
+    // },
     submitFile () {
-      // console.log(this.selFile)
-      var vm = this
-      const fd = new FormData()
+      if (this.selFile.size < 5 * 1024 * 1024) {
+        var vm = this
+        const fd = new FormData()
 
-      fd.append('file', vm.selFile)
+        fd.append('file', vm.selFile)
 
-      var config = {
-        onUploadProgress (e) {
-          var percentCompleted = Math.round( (e.loaded * 5000) / e.total );
-          // console.log("waiting")
+        var config = {
+          onUploadProgress (e) {
+            var percentCompleted = Math.round( (e.loaded * 5000) / e.total );
+            // console.log("waiting")
+          }
+        };
+
+        try {
+          axios.post('api/files/', fd, config,
+          { headers: {
+            'Content-Type': 'multipart/form-data'
+            // "X-CSRFTOKEN": 'csrfCookie',
+            // 'Content-Disposition': 'attachment; filename=this.selFile.name'
+             }
+          })
+            .then(res => {
+              // console.log(res)
+              this.$store.dispatch('loadFiles')
+              // wait(5000) // DEV ONLY: wait for 1.5s
+            })
+            .then( () => {
+              // this.gridOApi.refreshCells()
+              // console.log('Files loaded')
+              // this.gridApi.setRowData();
+            })
+        } catch (err) {
+          console.error(`Error received from axios.post: ${JSON.stringify(err)}`);
         }
-      };
-
-      try {
-        axios.post('api/files/', fd, config,
-        { headers: {
-          'Content-Type': 'multipart/form-data'
-          // "X-CSRFTOKEN": 'csrfCookie',
-          // 'Content-Disposition': 'attachment; filename=this.selFile.name'
-           }
-        })
-          .then(res => {
-            // console.log(res)
-            this.$store.dispatch('loadFiles')
-            // wait(5000) // DEV ONLY: wait for 1.5s
-          })
-          .then( () => {
-            // this.gridOApi.refreshCells()
-            // console.log('Files loaded')
-            // this.gridApi.setRowData();
-          })
-      } catch (err) {
-        console.error(`Error received from axios.post: ${JSON.stringify(err)}`);
+      }
+      else {
+        alert("File size must be smaller than 5MB")
       }
 
 
@@ -266,7 +294,7 @@ export default {
     onRowClicked(event) {
       let file_id = event.node.data.file_id
       let filename = event.node.data.name
-      console.log(file_id)
+      // console.log(file_id)
       axios({
         url: `media/${filename}`,
         method: 'GET',
@@ -307,37 +335,37 @@ export default {
 //   return Math.floor(params.value).toString() + ' TB'
 // }
 
-function sizeComparator(d1, d2) {
-  console.log(params)
-  return params
-}
+// function sizeComparator(d1, d2) {
+//   console.log(params)
+//   return params
+// }
+//
+// function dateComparator(date1, date2) {
+//   console.log(date1, date2)
+//   var date1Number = monthToComparableNumber(date1);
+//   var date2Number = monthToComparableNumber(date2);
+//   if (date1Number === null && date2Number === null) {
+//     return 0;
+//   }
+//   if (date1Number === null) {
+//     return -1;
+//   }
+//   if (date2Number === null) {
+//     return 1;
+//   }
+//   return date1Number - date2Number;
+// }
 
-function dateComparator(date1, date2) {
-  console.log(date1, date2)
-  var date1Number = monthToComparableNumber(date1);
-  var date2Number = monthToComparableNumber(date2);
-  if (date1Number === null && date2Number === null) {
-    return 0;
-  }
-  if (date1Number === null) {
-    return -1;
-  }
-  if (date2Number === null) {
-    return 1;
-  }
-  return date1Number - date2Number;
-}
-
-function monthToComparableNumber(date) {
-  if (date === undefined || date === null || date.length !== 10) {
-    return null;
-  }
-  var yearNumber = date.substring(6, 10);
-  var monthNumber = date.substring(3, 5);
-  var dayNumber = date.substring(0, 2);
-  var result = yearNumber * 10000 + monthNumber * 100 + dayNumber;
-  return result;
-}
+// function monthToComparableNumber(date) {
+//   if (date === undefined || date === null || date.length !== 10) {
+//     return null;
+//   }
+//   var yearNumber = date.substring(6, 10);
+//   var monthNumber = date.substring(3, 5);
+//   var dayNumber = date.substring(0, 2);
+//   var result = yearNumber * 10000 + monthNumber * 100 + dayNumber;
+//   return result;
+// }
 
 </script>
 
