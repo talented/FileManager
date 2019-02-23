@@ -1,6 +1,8 @@
 .DS_Store
 node_modules/
 dist/
+media/
+db.sqlite3
 npm-debug.log
 yarn-error.log
 

@@ -288,8 +288,8 @@ export default {
         .catch(error => {
           console.log(error)
         })
-        // this.modalShow = false
         this.mShow = false
+        this.status = false
     },
     onRowClicked(event) {
       let file_id = event.node.data.file_id
