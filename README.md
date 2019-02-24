@@ -12,22 +12,54 @@
 
 > A file manager web app with Django rest framework in backend and Vue.js in frontend with ag-grid data tables integration.
 
-## Installation
+## System Requirements
+* Python 3.6+
+* pip
+* virtualenv
+* Node.js
 
-1.  Clone the repository
-1.  Run `npm install`
+## Dependencies
+See [requirements.txt](https://github.com/talented/filemanager/blob/master/requirements.txt) for more information.
+
+## Build Instructions
+
+1. Clone the repository and get into the directory
+```
+$ git clone https://github.com/talented/FileManager.git
+$ cd filemanager
+```
+2. Create a virtual environment
+```
+(OSX)
+$ python3 -m venv .env
+
+(Linux)
+$ virtualenv .env
+```
+
+3. Activate virtual environment
+```
+$ . .venv/bin/Activate
+```
+
+4. Install modules by running 'requirements.txt'
+```
+$ pip install -r requirements.txt
+```
+
+5. Setup for vue.js
+```
+$ npm install
+```
 
 ## How To Use
 
-For development:
+1.  Run `npm run build`
+2.  Run `python manage.py makemigrations`
+3.  Run `python manage.py migrate`
+4.  Run `python manage.py runserver`
+1.  Open your browser using the url: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 
-1.  Run `yarn run dev`
-1.  Open your browser using the url: [http://127.0.0.1:3000/](http://127.0.0.1:3000/)
-
-For production:
-
-1.  Run `yarn generate`
-1.  Use the files under the `dist` folder and host them. Its a complete static site so it is really easy to deploy.
 
 ## Examples
 
