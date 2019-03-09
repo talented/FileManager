@@ -27,15 +27,3 @@ class FileUploadView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    # parser_classes = (MultiPartParser, FileUploadParser, )
-
-    # def put(self, request, format=None):
-    #     print(request.data)
-    #     with open(os.path.join(BASE_DIR, 'media/', request.data['file'].name), 'wb') as f:
-    #         for chunk in request.data['file'].chunks():
-    #             f.write(chunk)
-    #     return Response(status=204)
-
-    # def delete(self, request, format=None):
-    #     file =

@@ -14,16 +14,13 @@ export default new Vuex.Store ({
       axios
            .get('api/files/')
            .then(data => {
-             // console.log('axios data', data.data)
              let rowData = data.data
              commit('SET_FILES', rowData)
-             // console.log(rowData)
            })
            .catch(error => {
              console.log(error)
            })
     }
-
   },
   mutations: {
     SET_FILES (state, files) {
@@ -31,17 +28,3 @@ export default new Vuex.Store ({
     }
   }
 })
-
-
-
-// axios
-//    .get('api/files/')
-//    .then(data => {
-//      console.log('axios data', data.data)
-//      this.posts = data.data
-//      this.rowData = data.data
-//
-//    })
-//    .catch(error => {
-//      console.log(error)
-//    })

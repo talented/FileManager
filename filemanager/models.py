@@ -1,8 +1,6 @@
 from django.db import models
 from django.utils import timezone
 
-
-
 class Data(models.Model):
     file_id = models.AutoField(primary_key=True)
     file = models.FileField(null=True, max_length=255)

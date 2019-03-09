@@ -4,10 +4,6 @@
             <b-navbar-brand href="#">
               <font-awesome-icon icon="tasks"/>&nbsp; &nbsp; File Manager</b-navbar-brand>
             <b-navbar-nav class="ml-auto">
-              <!-- <router-link tag='li' :to="{ name: 'home'}">
-                <b-nav-item>File Manager</b-nav-item>
-              </router-link> -->
-
               <router-link tag='li' :to="{ name: 'cutecat'}">
               <b-nav-item >Download</b-nav-item>
               </router-link>

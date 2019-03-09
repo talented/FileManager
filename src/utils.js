@@ -35,50 +35,7 @@ function dateFormatter(params) {
     var timestamp = params.value
     var date = new Date(timestamp)
     var formattedTime = moment(date).fromNow()
-
-    // var time_difference_in_seconds = (now.getTime() - date.getTime()) / 1000
-    // // return secondsToHMS(time_difference_in_seconds)
-    // const t = 60
-    // const times = ['seconds', 'minutes', 'hours', 'days', 'month', 'year']
-    // var formattedTime = null
-    // switch (true) {
-    //   case (time_difference_in_seconds < t):
-    //     formattedTime = (Math.trunc(time_difference_in_seconds)).toString() + " " + times[0]
-    //     break
-    //   case (time_difference_in_seconds < 60 * t) :
-    //     formattedTime = (Math.trunc(time_difference_in_seconds/60)).toString() + " " + times[1]
-    //     break
-    //   case (time_difference_in_seconds < 3600 * t):
-    //     formattedTime = (Math.trunc(time_difference_in_seconds/3600)).toString() + " " + times[2]
-    //     break
-    //   case (time_difference_in_seconds < 3600 * 24 * t):
-    //     formattedTime = (Math.trunc(time_difference_in_seconds/3600 * 24)).toString() + " " + times[3]
-    //     break
-    //   case (time_difference_in_seconds < 3600 * 24 * 30 * t):
-    //     formattedTime = (Math.trunc(time_difference_in_seconds/3600 * 24 * 30)).toString() + " " + times[4]
-    //     break
-    // }
     return formattedTime
-
-    // return formattedTime + ' ago'
-    // // multiplied by 1000 so that the argument is in milliseconds, not seconds.
-    // // var date = new Date(timestamp*1000);
-    // var year = date.getFullYear()
-    // var month = date.getMonth()
-    // var day = date.getDate();
-    // console.log("days: ", days)
-    // // Hours part from the timestamp
-    // var hours = date.getHours();
-    // console.log("hours: ", hours)
-    // // Minutes part from the timestamp
-    // var minutes = "0" + date.getMinutes();
-    // // Seconds part from the timestamp
-    // var seconds = "0" + date.getSeconds();
-    //
-    // // Will display time in 10:30:23 format
-    // // var formattedTime = hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
-    //
-    // return date
 }
 
 export { wait, sizeFormatter, dateFormatter }

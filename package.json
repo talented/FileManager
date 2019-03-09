@@ -27,7 +27,7 @@
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
     "svg-colorize-loader": "^0.1.2",
-    "vue": "^2.5.11",
+    "vue": "^2.6.8",
     "vue-property-decorator": "^7.3.0",
     "vue2-simplert-plugin": "^0.5.3",
     "vuex": "^3.1.0",
@@ -36,7 +36,7 @@
     "file-loader": "^1.1.4",
     "time-delta": "0.0.2",
     "vue-loader": "^13.0.5",
-    "vue-template-compiler": "^2.4.4",
+    "vue-template-compiler": "^2.6.8",
     "webpack": "^3.6.0",
     "webpack-dev-server": "^2.9.1",
     "webpack-bundle-tracker": "^0.4.2-beta"
@@ -50,14 +50,6 @@
     "babel-core": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
-    "babel-preset-stage-3": "^6.24.1",
-    "cross-env": "^5.0.5",
-    "css-loader": "^0.28.7",
-    "file-loader": "^1.1.4",
-    "time-delta": "0.0.2",
-    "vue-loader": "^13.0.5",
-    "vue-template-compiler": "^2.4.4",
-    "webpack": "^3.6.0",
-    "webpack-dev-server": "^2.9.1"
+    "babel-preset-stage-3": "^6.24.1"
   }
 }

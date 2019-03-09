@@ -1,8 +1,6 @@
 # FileManager by <a href="https://github.com/talented">Talented</a>
 
 <div align="center">
-  <!-- <a href="https://www.paypal.me/kevinpeters96/1"><img src="https://img.shields.io/badge/Donate-Paypal-003087.svg?style=flat" alt="badge Donate" /></a>
-  <a href="https://steamcommunity.com/tradeoffer/new/?partner=68364320&token=CzTCv8JM"><img src="https://img.shields.io/badge/Donate-Steam-000000.svg?style=flat" alt="badge Donate" /></a> -->
   <a href="https://github.com/igeligel/personal-site/blob/master/LICENSE"><img src="https://img.shields.io/badge/License-MIT-1da1f2.svg?style=flat" alt="badge License" /></a>
 </div>
 
@@ -58,22 +56,3 @@ npm install
 2.  Run `python manage.py migrate`
 3.  Run `python manage.py runserver`
 4.  Open your browser using the url: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
-
-
-<!-- ## Examples
-
-<!-- * [Official site](https://www.kevinpeters.net/) -->
-
-<!-- ## Resources -->
-
-<!-- ### Motivation
-
-Wanted to try out [nuxt.js](https://nuxtjs.org/) and created a new portfolio because the old one was really bad.
-
-## License
-
-_File manager_ is realeased under the MIT License.
-
-## This readme is powered by vue-readme
-
-Check out vue-readme [[Website](https://igeligel.github.io/vue-readme) | [GitHub](https://github.com/igeligel/vue-readme)] -->
