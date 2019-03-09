@@ -56,3 +56,8 @@ npm install
 2.  Run `python manage.py migrate`
 3.  Run `python manage.py runserver`
 4.  Open your browser using the url: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+
+## TO DO's
+
+1. Dockerize the app
+2. Deploy to AWS with S3
