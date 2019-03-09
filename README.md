@@ -25,47 +25,46 @@ See [requirements.txt](https://github.com/talented/filemanager/blob/master/requi
 
 1. Clone the repository and get into the directory
 ```
-$ git clone https://github.com/talented/FileManager.git
-$ cd filemanager
+git clone https://github.com/talented/FileManager.git
+cd filemanager
 ```
 2. Create a virtual environment
 ```
 (OSX)
-$ python3 -m venv .env
+python3 -m venv .env
 
 (Linux)
-$ virtualenv .env
+virtualenv .env
 ```
 
 3. Activate virtual environment
 ```
-$ . .venv/bin/Activate
+. .venv/bin/Activate
 ```
 
 4. Install modules by running 'requirements.txt'
 ```
-$ pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 5. Setup for vue.js
 ```
-$ npm install
+npm install
 ```
 
-## How To Use
+## How To Start
 
 1.  Run `npm run build`
-2.  Run `python manage.py makemigrations`
-3.  Run `python manage.py migrate`
-4.  Run `python manage.py runserver`
-1.  Open your browser using the url: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+2.  Run `python manage.py migrate`
+3.  Run `python manage.py runserver`
+4.  Open your browser using the url: [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 
 
-## Examples
+<!-- ## Examples
 
 <!-- * [Official site](https://www.kevinpeters.net/) -->
 
-## Resources
+<!-- ## Resources -->
 
 <!-- ### Motivation
 
