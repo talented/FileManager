@@ -8,7 +8,7 @@ export default Vue.extend({
 
           </span>
           `,
-  data: function () {
+  data () {
     return {
       imgIcon: null,
       value: ''
