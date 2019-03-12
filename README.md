@@ -10,6 +10,10 @@
 
 > A file manager web app with Django rest framework in backend and Vue.js in frontend with ag-grid data tables integration.
 
+There is a medium blog post that I explained in detail as a tutorial how I built it:
+<a href="https://medium.com/@ozguryarikkas/how-to-build-a-file-manager-storage-web-app-with-django-rest-framework-and-vue-js-e89a83318e9c">How to build a File Manager Storage web app with Django Rest Framework and Vue.js with Vuex and Ag-grid integration</a>
+
+
 ## System Requirements
 * Python 3.6+
 * pip

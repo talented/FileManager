@@ -198,7 +198,7 @@ export default {
 
         fd.append('file', vm.selFile)
 
-        var config = {
+        const config = {
           onUploadProgress (e) {
             var percentCompleted = Math.round( (e.loaded * 5000) / e.total );
           }
