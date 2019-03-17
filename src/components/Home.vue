@@ -7,7 +7,7 @@
       <b-form-file v-model="selFile"
                    ref="form"
                    placeholder="Drop a file here..."/>
-      <b-button variant="primary" @click="submitFile">
+      <b-button variant="primary" @click="submitFile()">
         Submit &nbsp; &nbsp;<font-awesome-icon icon="upload" /></b-button>
     </b-card>
 
@@ -68,17 +68,15 @@
 </template>
 
 <script>
-import axios from 'axios'
 import {AgGridVue} from "ag-grid-vue"
 import filetypeCellRenderer from "../filetypeCellRenderer.js"
 
 import { mapState } from 'vuex'
-import { wait, sizeFormatter, dateFormatter } from '../utils'
+import { sizeFormatter, dateFormatter } from '../utils'
 
 export default {
   data () {
     return {
-      message: 'Welcome to Your Vue.js App!',
       data: {dirname: '.', root: '.'},
       selFile: null,
       columnDefs: null,
@@ -162,6 +160,7 @@ export default {
     this.$store.dispatch('loadFiles')
     this.gridOApi = this.gridOptions.api;
   },
+
   computed: {
     ...mapState([
       'rowData'
@@ -176,6 +175,7 @@ export default {
       params.api.sizeColumnsToFit();
       params.api.setRowData();
     },
+
     onRowSelected (event) {
       const selectedNodes = this.gridApi.getSelectedNodes();
       const selectedData = selectedNodes.map( node => node.data );
@@ -195,35 +195,13 @@ export default {
       if (this.selFile.size < 5 * 1024 * 1024) {
         var vm = this
         const fd = new FormData()
-
         fd.append('file', vm.selFile)
-
-        const config = {
-          onUploadProgress (e) {
-            var percentCompleted = Math.round( (e.loaded * 5000) / e.total );
-          }
-        };
-
-        try {
-          axios.post('api/files/', fd, config,
-          { headers: {
-            'Content-Type': 'multipart/form-data'
-             }
-          })
-            .then(res => {
-              this.$store.dispatch('loadFiles')
-            })
-        } catch (err) {
-          console.error(`Error received from axios.post: ${JSON.stringify(err)}`);
-        }
-      }
-      else {
+        this.$store.dispatch('postFile', fd)
+      } else {
         alert("File size must be smaller than 5MB")
       }
-
-
-
     },
+
     deleteFile () {
       const selectedNodes = this.gridApi.getSelectedNodes()
       if (selectedNodes.length > 0) {
@@ -235,34 +213,17 @@ export default {
         this.modal = true
       }
     },
+
     handleOk () {
-        axios.delete('api/files/' + this.result_id)
-          .then(response => {
-            console.log(response)
-            this.$store.dispatch('loadFiles')
-        })
-        .catch(error => {
-          console.log(error)
-        })
-        this.mShow = false
-        this.status = false
+      this.$store.dispatch('deleteFile', this.result_id)
+      this.mShow = false
+      this.status = false
     },
+
     onRowClicked(event) {
       let file_id = event.node.data.file_id
       let filename = event.node.data.name
-      axios({
-        url: `media/${filename}`,
-        method: 'GET',
-        responseType: 'blob',
-      })
-      .then ((res) => {
-        const url = window.URL.createObjectURL(new Blob([res.data]))
-        const link = document.createElement('a')
-        link.href = url
-        link.setAttribute('download', filename)
-        document.body.appendChild(link)
-        link.click()
-      })
+      this.$store.dispatch('downloadFile', filename)
 
     }
   }
