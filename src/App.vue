@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 import Header from './components/Header'
 import Home from './components/Home'
@@ -24,6 +23,5 @@ export default {
 #app {
   /* text-align: center */
   font-family: 'Questrial';
-  ;
 }
 </style>

@@ -1,13 +1,13 @@
 from rest_framework import viewsets
 from .models import Data
 from .serializers import DataSerializer
-from rest_framework.response import Response # from viewsets doc
+
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 
+from rest_framework.response import Response # from viewsets doc
 from rest_framework import permissions, status
-
-from rest_framework.parsers import FileUploadParser, MultiPartParser, FormParser
+from rest_framework.parsers import MultiPartParser, FormParser
 
 # A ViewSet class is simply a type of class-based View,
 # that does not provide any method handlers such as .get() or .post(),
@@ -22,7 +22,7 @@ class DataViewSet(viewsets.ModelViewSet):
     serializer_class = DataSerializer
 
     permission_classes = (permissions.AllowAny,) # we assume that we have a session user
-    parser_classes = (MultiPartParser, FormParser )
+    parser_classes = (MultiPartParser, FormParser)
 
     def post(self, request, format=None):
         # print(request.data['file'].name)

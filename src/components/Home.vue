@@ -3,6 +3,7 @@
 
     <br />
 
+    <!-- PART-2: UPLOAD A FILE -->
     <b-card bg-variant="light">
       <b-form-file v-model="selFile"
                    ref="form"
@@ -13,6 +14,7 @@
 
     <br />
 
+    <!-- PART-3: DELETE FILE(S) -->
     <b-card bg-variant="light">
       <b-row>
         <b-col col="4"><b-button variant="danger" @click="deleteFile()">
@@ -26,39 +28,42 @@
           </b-card>
         </b-col>
       </b-row>
-    <hr />
 
-    <ag-grid-vue style="width: 100%; height: 500px; border: 1px solid #e7e9ea; border-radius: 4px;"
-                 class="ag-theme-material"
-                 :row-height=60
-                 :columnDefs="columnDefs"
-                 :gridOptions="gridOptions"
-                 :autoGroupColumnDef="autoGroupColumnDef"
-                 :frameworkComponents="frameworkComponents"
-                 :suppressRowClickSelection="true"
-                 :groupSelectsChildren="true"
-                 :debug="true"
-                 :rowSelection="rowSelection"
+      <hr />
 
-                 :defaultColDef="{
-                            enableValue: true,
-                            sortable: true,
-                            resizable: true,
-                            filter: true
-                            }"
+      <!-- PART-1: LIST FILES -->
+      <ag-grid-vue style="width: 100%; height: 500px; border: 1px solid #e7e9ea; border-radius: 4px;"
+                   class="ag-theme-material"
+                   :row-height=60
+                   :columnDefs="columnDefs"
+                   :gridOptions="gridOptions"
+                   :autoGroupColumnDef="autoGroupColumnDef"
+                   :frameworkComponents="frameworkComponents"
+                   :suppressRowClickSelection="true"
+                   :groupSelectsChildren="true"
+                   :debug="true"
+                   :rowSelection="rowSelection"
 
-                 :enableRangeSelection="true"
-                 animateRows
-                 @rowClicked = "onRowClicked"
-                 @rowSelected = "onRowSelected"
-                 :paginationAutoPageSize="true"
-                 :pagination="true"
-                 @gridReady="onGridReady"
-                 :rowData="rowData">
-    </ag-grid-vue>
+                   :defaultColDef="{
+                              enableValue: true,
+                              sortable: true,
+                              resizable: true,
+                              filter: true
+                              }"
+
+                   :enableRangeSelection="true"
+                   animateRows
+                   @rowClicked = "onRowClicked"
+                   @rowSelected = "onRowSelected"
+                   :paginationAutoPageSize="true"
+                   :pagination="true"
+                   @gridReady="onGridReady"
+                   :rowData="rowData">
+      </ag-grid-vue>
 
   </b-card>
 
+  <!-- PART-3: DELETE FILE(S) -->
   <!-- Modal Component -->
   <b-modal v-if="mShow" v-model="modal" @ok="handleOk" @cancel="$emit('close')">
       Selected file(s) will be deleted?
@@ -69,15 +74,14 @@
 
 <script>
 import {AgGridVue} from "ag-grid-vue"
-import filetypeCellRenderer from "../filetypeCellRenderer.js"
+import filetypeCellRenderer from "../filetypeCellRenderer" // uploaded file type validator
 
 import { mapState } from 'vuex'
-import { sizeFormatter, dateFormatter } from '../utils'
+import { sizeFormatter, dateFormatter } from '../utils' // Ag-grid display format for file size and date
 
 export default {
   data () {
     return {
-      data: {dirname: '.', root: '.'},
       selFile: null,
       columnDefs: null,
       autoGroupColumnDef: null,
@@ -233,8 +237,8 @@ export default {
 
 <style lang="scss">
 
-$primary-color: #2196F3; // blue-500
-$accent-color: green; // amber-A200
+// $primary-color: #2196F3; // blue-500
+// $accent-color: green; // amber-A200
 
 @import "~ag-grid-community/dist/styles/ag-grid.css";
 @import "~ag-grid-community/dist/styles/ag-theme-balham.css";
@@ -261,7 +265,6 @@ $accent-color: green; // amber-A200
 .ag-root-wrapper-body.ag-layout-normal {
   border-radius: 4px;
 }
-
 
 /* Style buttons */
 .btn {
