@@ -41,7 +41,7 @@ virtualenv .env
 
 3. Activate virtual environment
 ```
-. .venv/bin/Activate
+. .env/bin/Activate
 ```
 
 4. Install modules by running 'requirements.txt'
