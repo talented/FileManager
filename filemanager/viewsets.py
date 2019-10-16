@@ -25,8 +25,6 @@ class DataViewSet(viewsets.ModelViewSet):
     parser_classes = (MultiPartParser, FormParser)
 
     def post(self, request, format=None):
-        # print(request.data['file'].name)
-        # print(dir(request.FILES['file']))
         serializer = DataSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()

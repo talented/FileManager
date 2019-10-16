@@ -1,4 +1,3 @@
-
 import Vue from 'vue'
 import App from './App.vue'
 import axios from 'axios'
@@ -11,37 +10,41 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 // font awesome settings
-import { library } from '@fortawesome/fontawesome-svg-core'
 import {
-        faFilePdf,
-        faFileImage,
-        faFileExcel,
-        faFilePowerpoint,
-        faFileWord,
-        faFileVideo,
-        faFileArchive,
-        faFileAlt,
-        faFile,
-        faTrashAlt,
-        faUpload,
-        faTasks
-       } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+  library
+} from '@fortawesome/fontawesome-svg-core'
+import {
+  faFilePdf,
+  faFileImage,
+  faFileExcel,
+  faFilePowerpoint,
+  faFileWord,
+  faFileVideo,
+  faFileArchive,
+  faFileAlt,
+  faFile,
+  faTrashAlt,
+  faUpload,
+  faTasks
+} from '@fortawesome/free-solid-svg-icons'
+import {
+  FontAwesomeIcon
+} from '@fortawesome/vue-fontawesome'
 
 library.add(
-            faFilePdf,
-            faFileImage,
-            faFileExcel,
-            faFilePowerpoint,
-            faFileWord,
-            faFileVideo,
-            faFileArchive,
-            faFileAlt,
-            faFile,
-            faTrashAlt,
-            faUpload,
-            faTasks
-          )
+  faFilePdf,
+  faFileImage,
+  faFileExcel,
+  faFilePowerpoint,
+  faFileWord,
+  faFileVideo,
+  faFileArchive,
+  faFileAlt,
+  faFile,
+  faTrashAlt,
+  faUpload,
+  faTasks
+)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

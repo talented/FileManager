@@ -6,22 +6,20 @@
 </template>
 
 <script>
-
-import Header from './components/Header'
-import Home from './components/Home'
+import Header from "./components/Header";
+import Home from "./components/Home";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
     Header,
     Home
   }
-}
+};
 </script>
 
 <style>
 #app {
-  /* text-align: center */
-  font-family: 'Questrial';
+  font-family: "Questrial";
 }
 </style>
