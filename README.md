@@ -28,7 +28,7 @@ See [requirements.txt](https://github.com/talented/filemanager/blob/master/requi
 1. Clone the repository and get into the directory
 ```
 git clone https://github.com/talented/FileManager.git
-cd filemanager
+cd FileManager
 ```
 2. Create a virtual environment
 ```
