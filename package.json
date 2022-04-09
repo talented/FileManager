@@ -23,7 +23,7 @@
     "ag-grid-vue": "^20.0.0",
     "axios": "^0.18.0",
     "bootstrap-vue": "^2.0.0-rc.11",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
     "svg-colorize-loader": "^0.1.2",
