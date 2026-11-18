@@ -19,6 +19,20 @@ class DataSerializer(serializers.ModelSerializer):
         # fields = '__all__'
         fields = ('file_id', 'file', 'since_added', 'size', 'name', 'filetype')
 
+    BLOCKED_EXTENSIONS = (
+        'html', 'htm', 'xhtml', 'shtml', 'xml', 'svg', 'svgz',
+        'js', 'mjs', 'htc', 'xsl', 'xslt', 'php', 'phtml', 'phar',
+    )
+
+    def validate_file(self, value):
+        name = getattr(value, 'name', '') or ''
+        extension = name.rsplit('.', 1)[-1].lower() if '.' in name else ''
+        if extension in self.BLOCKED_EXTENSIONS:
+            raise serializers.ValidationError(
+                'Files of this type are not allowed.'
+            )
+        return value
+
     def get_size(self, obj):
         file_size = ''
         if obj.file and hasattr(obj.file, 'size'):
